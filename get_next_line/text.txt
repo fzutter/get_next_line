@@ -1,0 +1,2 @@
+Ceci est un test
+de get_next_line.
