@@ -3,39 +3,96 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fzutter <fzutter@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fabien <fabien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:37:54 by fzutter           #+#    #+#             */
-/*   Updated: 2024/04/09 15:23:29 by fzutter          ###   ########.fr       */
+/*   Updated: 2024/04/22 22:49:46 by fabien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "stdio.h"
 
-char    *_fill_line_buffer(int fd, char *left_c, char *buffer)
+static char	*temp_line(int fd, char *buf, char *backup)
 {
-	
-	read(fd, buf, 4)
+	int		read_line;
+	char	*char_temp;
 
-
-
-
+	read_line = 1;
+	while (read_line != '\0')
+	{
+		read_line = read(fd, buf, BUFFER_SIZE);
+		if (read_line == -1)
+			return (NULL);
+		else if (read_line == 0)
+			break ;
+		buf[read_line] = '\0';
+		if (backup == NULL)
+			backup = ft_strdup("");
+		char_temp = backup;
+		backup = ft_strjoin(char_temp, buf);
+		free (char_temp);
+		char_temp = NULL;
+		if (ft_strchr (buf, '\n'))
+			break ;
+	}
+	return (backup);
 }
 
-char    *get_next_line(int fd)
+static char	*extract(char *line)
 {
-	char	buffer[BUFFER_SIZE];
-	char	left_c;
+	size_t	count;
+	char	*backup;
 
-    if (fd == -1)
-		return(NULL);
-	left_c = malloc(BUFFER_SIZE + 1);
-	if (left_c == 0)
+	count = 0;
+	while (line[count] != '\n' && line[count] != '\0')
+		count++;
+	if (line[count] == '\0' || line[1] == '\0')
+		return (0);
+	backup = ft_substr(line, count + 1, ft_strlen(line) - count);
+	if (*backup == '\0')
+	{
+		free(backup);
+		backup = NULL;
+	}
+	line[count + 1] = '\0';
+	return (backup);
+}
+
+char	*get_next_line(int fd)
+{
+	char		*line;
+	char		*buf;
+	static char	*backup;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
+	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buf)
+		return (0);
+	line = temp_line(fd, buf, backup);
+	free(buf);
+	buf = NULL;
+	if (!line)
 		return (NULL);
-    *_fill_line_buffer(fd, left_c, *buffer);
+	backup = extract(line);
+	return (line);
 }
-int main()
+/*
+int	main(void)
 {
-    int fd;
-    fd = open("text.txt", O_RDONLY);
+	int		fd;
+	char	*line;
+
+	fd = open("text", O_RDONLY);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break ;
+		printf("%s", line);
+		free (line);
+	}
+	return (0);
 }
+*/
