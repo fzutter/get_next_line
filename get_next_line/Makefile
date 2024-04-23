@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fabien <fabien@student.42.fr>              +#+  +:+       +#+         #
+#    By: fzutter <fzutter@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/09 10:18:33 by fzutter           #+#    #+#              #
-#    Updated: 2024/04/21 21:55:15 by fabien           ###   ########.fr        #
+#    Updated: 2024/04/23 13:56:48 by fzutter          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ OBJ = $(SRC:.c=.o)
 NAME = get_next_line.a
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=42
+CFLAGS = -Wall -Wextra -Werror
 
 all : $(NAME)
 

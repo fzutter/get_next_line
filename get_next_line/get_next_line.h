@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fabien <fabien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fzutter <fzutter@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:38:08 by fzutter           #+#    #+#             */
-/*   Updated: 2024/04/22 22:52:46 by fabien           ###   ########.fr       */
+/*   Updated: 2024/04/23 14:00:31 by fzutter          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stddef.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include "stdio.h"
 
 char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
