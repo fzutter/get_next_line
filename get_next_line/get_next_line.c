@@ -6,7 +6,7 @@
 /*   By: fabien <fabien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 10:37:54 by fzutter           #+#    #+#             */
-/*   Updated: 2024/04/24 21:30:09 by fabien           ###   ########.fr       */
+/*   Updated: 2024/04/24 21:37:02 by fabien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*extract(char *line)
 	count = 0;
 	while (line[count] != '\n' && line[count] != '\0')
 		count++;
-	if (line[count] == 0 || line[1] == 0)
+	if (line[count] == '\0' || line[1] == '\0')
 		return (NULL);
 	temp = ft_substr(line, count + 1, ft_strlen(line) - count);
 	if (*temp == 0)
