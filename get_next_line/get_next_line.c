@@ -6,26 +6,26 @@
 /*   By: fabien <fabien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 10:37:54 by fzutter           #+#    #+#             */
-/*   Updated: 2024/04/24 21:37:02 by fabien           ###   ########.fr       */
+/*   Updated: 2024/04/25 06:53:32 by fabien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*temp_line(int fd, char *backup, char *buf)
+static char	*read_line(int fd, char *backup, char *buf)
 {
-	ssize_t		read_line;
+	ssize_t		check_line;
 	char		*char_temp;
 
-	read_line = 1;
-	while (read_line > 0)
+	check_line = 1;
+	while (check_line > 0)
 	{
-		read_line = read(fd, buf, BUFFER_SIZE);
-		if (read_line == -1)
+		check_line = read(fd, buf, BUFFER_SIZE);
+		if (check_line == -1)
 			return (NULL);
-		else if (read_line == 0)
+		else if (check_line == 0)
 			break ;
-		buf[read_line] = '\0';
+		buf[check_line] = '\0';
 		if (backup == NULL)
 			backup = ft_strdup("");
 		char_temp = backup;
@@ -38,7 +38,7 @@ static char	*temp_line(int fd, char *backup, char *buf)
 	return (backup);
 }
 
-static char	*extract(char *line)
+static char	*extract_line(char *line)
 {
 	ssize_t	count;
 	char	*temp;
@@ -54,7 +54,7 @@ static char	*extract(char *line)
 		free(temp);
 		temp = NULL;
 	}
-	line[count + 1] = 0;
+	line[count + 1] = '\0';
 	return (temp);
 }
 
@@ -74,12 +74,12 @@ char	*get_next_line(int fd)
 	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (buf == NULL)
 		return (NULL);
-	line = temp_line(fd, backup, buf);
+	line = read_line(fd, backup, buf);
 	free(buf);
 	buf = NULL;
 	if (line == NULL)
 		return (NULL);
-	backup = extract(line);
+	backup = extract_line(line);
 	return (line);
 }
 /*
